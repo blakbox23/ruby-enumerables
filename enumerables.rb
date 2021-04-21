@@ -1,62 +1,95 @@
 module Enumerable
-    def my_each
-        for item in to_a
-           yield item
-        end
-    end
+  def my_each(&block)
+    return to_enum(:my_each) unless block_given?
+    to_a.each(&block)
+  end
 
-    def my_each_with_index
-        for index in (0...to_a.length)
-            yield to_a[index], index
-        end
+  def my_each_with_index
+    return to_enum(:my_each_with_index) unless block_given?
+    (0...to_a.length).each do |index|
+      yield to_a[index], index
     end
+  end
 
-    def my_select
-        new_array=[]
-        to_a.my_each do |item|
-            if yield item
-                new_array.push(item)
-            end
-        end
-        new_array
-    end
-
-    def my_all?
-        result=true
-        to_a.my_each do |item|
-           unless yield item  
-            result=false
-           end
-        end
-        result
-    end
-
-    def my_any?
-        result=false
-        to_a.my_each do |item|
-           if yield item 
-            result = true
-           end
-        end
-        result
-    end
-
-    def my_none?
-    result =true
+  def my_select
+    return to_enum(:my_select) unless block_given?
+    new_array = []
     to_a.my_each do |item|
-        if yield item
-         result = false   
-        end
+      new_array.push(item) if yield item
+    end
+    new_array
+  end
+
+  def my_all?
+    return to_enum(:my_all?) unless block_given?
+    result = true
+    to_a.my_each do |item|
+      result = false unless yield item
     end
     result
-    end
+  end
 
-    def my_map
-    new_arr=[]
+  def my_any?
+    return to_enum(:my_any?) unless block_given?
+    result = false
     to_a.my_each do |item|
-    new_arr.push(yield item) 
+      result = true if yield item
     end
-    new_arr
-    end
-end
+    result
+  end
 
+  def my_none?
+    return to_enum(:my_none) unless block_given?
+    result = true
+    to_a.my_each do |item|
+      result = false if yield item
+    end
+    result
+  end
+
+  def my_count(check = nil)
+    return to_enum(:my_count) unless block_given?
+    maches = 0
+    if check
+      to_a.my_each do |item|
+        maches += 1 if item == check
+      end
+
+    elsif block_given?
+      to_a.my_each do |item|
+        maches += 1 if yield item
+      end
+    else
+      maches = to_a.length
+    end
+
+    maches
+  end
+
+  def my_map(proc = nil)
+    new_arr = []
+    if proc
+      to_a.my_each do |item|
+        new_arr.push(proc.call(item))
+      end
+    else
+      to_a.my_each do |item|
+        new_arr.push(yield item)
+      end
+
+    end
+
+    new_arr
+  end
+
+  def my_inject(acc = nil)
+    accumulator = 1
+    accumulator = acc 
+    if acc
+    to_a.my_each do |item|
+      accumulator = yield accumulator, item
+    end
+    accumulator
+  end
+  
+end
