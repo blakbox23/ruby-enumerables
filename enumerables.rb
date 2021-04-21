@@ -87,7 +87,7 @@ module Enumerable
   end
 
   def my_inject(accumulator = nil, sym = nil)
-    if (!accumulator.nil? )
+    if (!accumulator.nil?)
         sym = accumulator
         accumulator = nil
     end
