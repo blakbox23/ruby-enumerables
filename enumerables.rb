@@ -30,10 +30,14 @@ module Enumerable
         end
         result
     end
+
+    def my_any?
+        result=false
+        to_a.my_each do |item|
+           if yield item 
+            result = true
+           end
+        end
+        result
+    end
 end
-
- check = [2,4].my_all? do |item|
-    item.even?
-   end
-
-puts check
