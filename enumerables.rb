@@ -42,21 +42,69 @@ module Enumerable
     end
 
     def my_none?
-    result =true
-    to_a.my_each do |item|
-        if yield item
-         result = false   
+        result =true
+        to_a.my_each do |item|
+            if yield item
+                result = false   
+            end
         end
+        result
     end
-    result
+
+    def my_count(check = nil) 
+    
+        maches = 0;
+        if check 
+            to_a.my_each do |item|
+                if item == check
+                    maches +=1
+                end
+            end
+    
+        elsif block_given? 
+            to_a.my_each do |item|
+                if yield item
+                    maches +=1
+                end
+            end 
+        else
+            maches = to_a.length
+        end
+    
+        maches
     end
 
     def my_map
-    new_arr=[]
-    to_a.my_each do |item|
-    new_arr.push(yield item) 
+        new_arr=[]
+        to_a.my_each do |item|
+            new_arr.push(yield item) 
+        end
+        new_arr
     end
-    new_arr
+
+    def my_inject(acc = nil)
+        accumulator = 1
+        if acc 
+            accumulator = acc
+            to_a.my_each do |item|
+                accumulator = yield accumulator, item 
+            end
+        else
+            to_a.my_each do |item|
+                accumulator = yield accumulator, item 
+            end 
+        end
+        accumulator 
     end
 end
 
+
+def multiply_els(array)
+    return array.my_inject do |acc, item| 
+        acc * item
+    end
+end
+
+
+
+puts multiply_els([2,4,5])
