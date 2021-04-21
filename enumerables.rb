@@ -51,6 +51,27 @@ module Enumerable
     result
     end
 
-   
+   def my_count(check = nil) 
+    
+    maches = 0;
+    if check 
+        to_a.my_each do |item|
+            if item == check
+                maches +=1
+            end
+        end
+
+    elsif block_given? 
+        to_a.my_each do |item|
+            if yield item
+                maches +=1
+            end
+        end 
+    else
+        maches = to_a.length
+    end
+
+    maches
+   end
 
 end
