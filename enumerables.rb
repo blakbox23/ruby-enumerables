@@ -40,4 +40,17 @@ module Enumerable
         end
         result
     end
+
+    def my_none?
+    result =true
+    to_a.my_each do |item|
+        if yield item
+         result = false   
+        end
+    end
+    result
+    end
+
+   
+
 end
