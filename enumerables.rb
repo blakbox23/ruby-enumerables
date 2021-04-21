@@ -76,7 +76,6 @@ module Enumerable
         to_a.my_each do |item|
           new_arr.push(yield item)
         end
-  
       end
   
       new_arr
@@ -86,10 +85,10 @@ module Enumerable
       accumulator = 1
       accumulator = acc 
       if acc
-      to_a.my_each do |item|
-        accumulator = yield accumulator, item
+        to_a.my_each do |item|
+            accumulator = yield accumulator, item
+        end
       end
       accumulator
     end
-    
-  end
+end
