@@ -86,11 +86,8 @@ module Enumerable
     new_arr
   end
 
-  def my_inject(accumulator = nil, sym = nil)
-    if (!accumulator.nil?)
-        sym = accumulator
-        accumulator = nil
-    end
+  def my_inject(accumulator = nil)
+    accumulator = nil unless accumulator.nil?
     to_a.my_each { |item| accumulator = accumulator.nil? ? item : yield(accumulator, item) }
     accumulator
   end
