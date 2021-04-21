@@ -87,7 +87,7 @@ module Enumerable
   end
 
   def my_inject(accumulator = nil)
-    accumulator = nil unless accumulator.nil?
+    accumulator = accumulator unless accumulator.nil?
     to_a.my_each { |item| accumulator = accumulator.nil? ? item : yield(accumulator, item) }
     accumulator
   end
