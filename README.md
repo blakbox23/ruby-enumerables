@@ -1,6 +1,6 @@
 ## Advanced Building Blocks - Enumerables
 We re-implemented the various methods in Ruby's enumerable module.
-We used the `yield` and `#call` keywords as required by the instructions
+We used the `yield` and `#call` keywords as required by the instructions to come up with our own versions of these enumerable methods.
 
 ## Built With
 - Ruby
