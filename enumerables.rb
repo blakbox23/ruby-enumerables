@@ -12,9 +12,11 @@ module Enumerable
   def my_each_with_index
     return to_enum(:my_each_with_index) unless block_given?
 
-    (0...to_a.length).each do |index|
-      yield to_a[index], index
+    # rubocop:disable Style/For
+    for i in (0...to_a.length)
+      yield to_a[i], i
     end
+    # rubocop:enable Style/For
   end
 
   def my_select
