@@ -10,8 +10,14 @@ module Enumerable
             yield to_a[index], index
         end
     end
-end
 
-[1,2,3,4,5].my_each_with_index do |item, index|
-    puts "#{item} is index #{index}"
+    def my_select
+        new_array=[]
+        to_a.my_each do |item|
+            if yield item
+                new_array.push(item)
+            end
+        end
+        new_array
+    end
 end
