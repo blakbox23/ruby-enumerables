@@ -20,4 +20,20 @@ module Enumerable
         end
         new_array
     end
+
+    def my_all?
+        result=true
+        to_a.my_each do |item|
+           unless yield item  
+            result=false
+           end
+        end
+        result
+    end
 end
+
+ check = [2,4].my_all? do |item|
+    item.even?
+   end
+
+puts check
