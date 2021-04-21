@@ -1,8 +1,12 @@
 module Enumerable
-  def my_each(&block)
+  def my_each
     return to_enum(:my_each) unless block_given?
 
-    to_a.each(&block)
+    # rubocop:disable Style/For
+    for item in to_a
+      yield item
+    end
+    # rubocop:enable Style/For
   end
 
   def my_each_with_index
