@@ -138,5 +138,5 @@ end
 # rubocop:enable Metrics/ModuleLength
 
 def multiply_els(arg)
-  return arg.my_inject {|acc, item| acc * item}
+  arg.my_inject { |acc, item| acc * item }
 end
