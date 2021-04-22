@@ -128,14 +128,18 @@ module Enumerable
     new_arr
   end
 
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
+
   def my_inject(*params)
     arr = to_a
     result = params[0] if params[0].is_a? Integer
 
-    if params[0].is_a?(Symbol) || params[0].is_a?(String)
+    case params[0]
+    when Symbol, String
       symbol = params[0]
-   
-    elsif params[0].is_a?(Integer)
+
+    when Integer
       symbol = params[1] if params[1].is_a?(Symbol) || params[1].is_a?(String)
     end
 
@@ -147,9 +151,9 @@ module Enumerable
 
     result
   end
-
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/PerceivedComplexity
 end
-
 # rubocop:enable Metrics/ModuleLength
 
 def multiply_els(arg)
