@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/ModuleLength
 module Enumerable
   def my_each
     return to_enum(:my_each) unless block_given?
@@ -7,6 +8,7 @@ module Enumerable
       yield item
     end
     # rubocop:enable Style/For
+    self
   end
 
   def my_each_with_index
@@ -17,6 +19,7 @@ module Enumerable
       yield to_a[i], i
     end
     # rubocop:enable Style/For
+    self
   end
 
   def my_select
@@ -29,35 +32,64 @@ module Enumerable
     new_array
   end
 
-  def my_all?
-    return to_enum(:my_all?) unless block_given?
-
+  # rubocop:disable Style/CaseEquality
+  def my_all?(*params)
     result = true
-    to_a.my_each do |item|
-      result = false unless yield item
+    if !params[0].nil?
+      my_each do |item|
+        result = false unless params[0] === item
+      end
+
+    elsif !block_given?
+      my_each do |item|
+        result = false unless item
+      end
+
+    else
+      my_each do |item|
+        result = false unless yield(item)
+      end
     end
     result
   end
 
-  def my_any?
-    return to_enum(:my_any?) unless block_given?
-
+  def my_any?(*params)
     result = false
-    to_a.my_each do |item|
-      result = true if yield item
+    if !params[0].nil?
+      my_each do |item|
+        result = true if params[0] === item
+      end
+    elsif !block_given?
+      my_each do |item|
+        result = true if item
+      end
+    else
+      to_a.my_each do |item|
+        result = true if yield item
+      end
     end
     result
   end
 
-  def my_none?
-    return to_enum(:my_none?) unless block_given?
-
+  def my_none?(*params)
     result = true
-    to_a.my_each do |item|
-      result = false if yield item
+    if !params[0].nil?
+      my_each do |item|
+        result = false if params[0] === item
+      end
+    elsif !block_given?
+      my_each do |item|
+        result = false if item
+      end
+    else
+      to_a.my_each do |item|
+        result = false if yield item
+      end
     end
     result
   end
+
+  # rubocop:enable Style/CaseEquality
 
   def my_count(check = nil)
     maches = 0
@@ -78,6 +110,10 @@ module Enumerable
   end
 
   def my_map(proc = nil)
+    # rubocop:disable Lint/ToEnumArguments
+    return to_enum(:my_map) unless block_given?
+    # rubocop:enable Lint/ToEnumArguments
+
     new_arr = []
     if proc
       to_a.my_each do |item|
@@ -98,3 +134,5 @@ module Enumerable
     accumulator
   end
 end
+
+# rubocop:enable Metrics/ModuleLength
