@@ -81,7 +81,7 @@ describe Enumerable do
         end
     end
 
-    describe "#my_all" do
+    describe "#my_all?" do
         context "When we pass a block while calling a method and don't have an argument" do
             it "return true if block condition is true for the all elements" do
                 expect(arr.my_all?{|n| n < 10}).to be true
@@ -125,4 +125,47 @@ describe Enumerable do
         end
     end
 
+    describe "my_any?" do 
+        context "When we pass a block while calling a method and don't have an argument" do
+            it "return true if at least one element matches the condition in the block" do
+                expect(arr.my_any?{|n| n > 4}).to be true
+            end
+            it "return false if none element matches the condition in the block" do
+                expect(arr.my_any?{|n| n > 10}).to be false
+            end
+        end
+        context "When we pass an argument without a block " do 
+            context "When we have Regexp as argument" do
+                it "return false if all elements don't match to Regexp" do
+                    expect(textarr.my_any?(/x/)).to be false
+                end
+                it "return true if at least one element matches the condition" do
+                    expect(textarr.my_any?(/t/)).to be true
+                end
+            end
+            context "When we have Class as argument" do
+                it "return false if all elements are not class instances" do
+                    expect(textarr.my_any?(Numeric)).to be false
+                end
+                it "return true if at least one element is class instance" do
+                    expect([1,'l', 20].my_any?(String)).to be true
+                end
+            end
+        end
+        context "When we don't pass any parrameter nor block " do 
+            context "When we have array collection " do
+                it "return false if any element is nil or false" do
+                    expect([nil, false, false].my_any?).to be false
+                end
+                it "return true if at least one element is true" do
+                    expect([nil, true, false].my_any?).to be true
+                end
+            end
+            context "When we have empty collection" do
+                it "return true " do
+                    expect([].my_any?).to be false
+                end
+            end
+        end
+    end
 end
