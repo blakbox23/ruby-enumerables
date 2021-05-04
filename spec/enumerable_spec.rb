@@ -5,6 +5,7 @@ require_relative "../enumerables.rb"
 # a.each {|x| print x, " -- " }
 describe Enumerable do 
     let(:arr) {[1,2,3,4,5]}
+    let(:textarr) {["ant", "bear", "cat"]}
     let(:hash) {{'dog' => 'canine', 'cat' => 'feline', 'donkey' => 'asinine', 12 => 'dodecine'}}
     let(:range) {(3..8)}
     describe "#my_each" do 
@@ -79,4 +80,49 @@ describe Enumerable do
             end
         end
     end
+
+    describe "#my_all" do
+        context "When we pass a block while calling a method and don't have an argument" do
+            it "return true if block condition is true for the all elements" do
+                expect(arr.my_all?{|n| n < 10}).to be true
+            end
+            it "return false if block condition is false for the all elements" do
+                expect(arr.my_all?{|n| n > 10}).to be false
+            end
+        end
+        context "When we pass an argument without a block " do 
+            context "When we have Regexp as argument" do
+                it "return false if all elements doesn't match to Regexp" do
+                    expect(textarr.my_all?(/t/)).to be false
+                end
+                it "return true if all elements match to Regexp" do
+                    expect(textarr.my_all?(/a/)).to be true
+                end
+            end
+            context "When we have Class as argument" do
+                it "return false if all elements are not class instances" do
+                    expect(textarr.my_all?(Numeric)).to be false
+                end
+                it "return true if all elements are class instances" do
+                    expect(textarr.my_all?(String)).to be true
+                end
+            end
+        end
+        context "When we don't pass any parrameter nor block " do 
+            context "When we have array collection " do
+                it "return false if any element is nil or false" do
+                    expect([nil, true, 99].my_all?).to be false
+                end
+                it "return true if all elements are true" do
+                    expect(["nil", true, 99].my_all?).to be true
+                end
+            end
+            context "When we have empty collection" do
+                it "return true " do
+                    expect([].my_all?).to be true
+                end
+            end
+        end
+    end
+
 end
