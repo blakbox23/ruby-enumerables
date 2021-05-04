@@ -235,4 +235,30 @@ describe Enumerable do
             end
         end
     end
+
+    describe "#my_map" do
+        context "When we pass block without arguments" do
+            it "Return new array with new elements" do
+                expect(arr.my_map{|i| i*i}).to eql([1, 4, 9, 16, 25])
+            end
+            context "When we pass block without operations " do
+                it "return block value for each element in array" do
+                    expect(arr.my_map{"cat"}).to eql(["cat", "cat", "cat", "cat", "cat"])
+                end
+            end
+        end
+        context "When we pass block with proc" do
+            my_proc = proc { |i| i * 2 }
+            it "Return new array and execute only proc" do
+                expect((1..5).my_map(my_proc) { |i| i*i } ).to eql([2, 4, 6, 8, 10])
+            end
+            
+        end
+        context "When we don't pass block" do
+            it "Returns enumerator" do
+                expect(arr.my_map).to be_an Enumerator
+            end
+        end
+                   
+    end
 end
