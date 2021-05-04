@@ -35,4 +35,26 @@ describe Enumerable do
             end
         end
     end
+
+    describe "#my_each_with_index " do
+        let(:output) {[]}
+        context "If we pass a block while calling the method on array" do 
+            it "loop throuth the collection and output individual item" do 
+                arr.my_each_with_index {|item, index| output << item}
+                expect(output[3]).to eql(arr[3])
+            end
+        end
+        context "if we are calling my_each_with_index on range" do
+            let(:outrange) {Array.new}
+            it "iterates trough the range " do
+                range.my_each_with_index {|item| outrange << item}
+                expect(outrange[1]).to eql(range.to_a[1])
+            end
+        end
+        context "if we don't pass a block while calling the method" do
+            it "return enumerate my_each_with_index" do
+                expect(arr.my_each_with_index).to be_an Enumerator
+            end
+        end
+    end
 end
