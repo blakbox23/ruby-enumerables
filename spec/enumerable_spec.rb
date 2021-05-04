@@ -29,5 +29,10 @@ describe Enumerable do
                 expect(outrange).to eql(range.to_a)
             end
         end
+        context "if we don't pass a block while calling the method" do
+            it "return enumerate my_each" do
+                expect(arr.my_each).to be_an Enumerator
+            end
+        end
     end
 end
