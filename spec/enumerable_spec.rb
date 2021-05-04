@@ -125,7 +125,7 @@ describe Enumerable do
         end
     end
 
-    describe "my_any?" do 
+    describe "#my_any?" do 
         context "When we pass a block while calling a method and don't have an argument" do
             it "return true if at least one element matches the condition in the block" do
                 expect(arr.my_any?{|n| n > 4}).to be true
@@ -169,7 +169,7 @@ describe Enumerable do
         end
     end
 
-    describe "my_none?" do 
+    describe "#my_none?" do 
         context "When we pass a block while calling a method and don't have an argument" do
             it "return true if none of elements matches the condition in the block" do
                 expect(arr.my_none?{|n| n > 8}).to be true
@@ -209,6 +209,29 @@ describe Enumerable do
                 it "return true " do
                     expect([].my_none?).to be true
                 end
+            end
+        end
+    end
+
+    describe "#my_count" do 
+        context "When a block is passed while calling the method" do 
+            it "return the number of elements that match the condition in the block" do 
+                result = arr.my_count {|item| item > 3}
+                expect(result).to eql(2)
+            end
+        end
+
+        context "When an argument is passed without a block" do 
+            it "return the number of elements that match the argument" do 
+                result = arr.my_count(2)
+                expect(result).to eql(1)
+            end
+        end
+
+        context "When no block neither argument is passed" do 
+            it "return the number of all the elements in the collection" do 
+                result = arr.my_count
+                expect(result).to eql(5)
             end
         end
     end
