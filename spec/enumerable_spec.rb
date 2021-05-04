@@ -9,7 +9,7 @@ describe Enumerable do
     let(:range) {(3..8)}
     describe "#my_each" do 
         let(:output) {[]}
-        context "If we pass a block while calling the method" do 
+        context "If we pass a block while calling the method on array" do 
             it "loop throuth the collection and output individual item" do 
                 arr.my_each {|item| output << item}
                 expect(output).to eql(arr)
