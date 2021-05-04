@@ -162,8 +162,52 @@ describe Enumerable do
                 end
             end
             context "When we have empty collection" do
-                it "return true " do
+                it "return false " do
                     expect([].my_any?).to be false
+                end
+            end
+        end
+    end
+
+    describe "my_none?" do 
+        context "When we pass a block while calling a method and don't have an argument" do
+            it "return true if none of elements matches the condition in the block" do
+                expect(arr.my_none?{|n| n > 8}).to be true
+            end
+            it "return false if at least one element matches the condition in the block" do
+                expect(arr.my_none?{|n| n > 4}).to be false
+            end
+        end
+        context "When we pass an argument without a block " do 
+            context "When we have Regexp as argument" do
+                it "return false if any element match to Regexp" do
+                    expect(textarr.my_none?(/t/)).to be false
+                end
+                it "return true if all element don't matches the condition" do
+                    expect(textarr.my_none?(/x/)).to be true
+                end
+            end
+            context "When we have Class as argument" do
+                it "return false if any elemnent is class instance" do
+                    expect([2, 4, 5, "word"].my_none?(String)).to be false
+                end
+                it "return true if all elements are not class instance" do
+                    expect(arr.my_none?(String)).to be true
+                end
+            end
+        end
+        context "When we don't pass any parrameter nor block " do 
+            context "When we have array collection " do
+                it "return false if at least one element is true " do
+                    expect([nil, false, true].my_none?).to be false
+                end
+                it "return true if all elements are nil or false" do
+                    expect([nil, false, false].my_none?).to be true
+                end
+            end
+            context "When we have empty collection" do
+                it "return true " do
+                    expect([].my_none?).to be true
                 end
             end
         end
