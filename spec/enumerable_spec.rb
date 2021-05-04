@@ -261,4 +261,31 @@ describe Enumerable do
         end
                    
     end
+
+    describe "#my_inject" do 
+        context "When a symbol is passed as an argument without a block" do 
+            it "Returns the result from the operation with the symbol" do 
+                expect(arr.my_inject(:+)).to eql(15)
+            end
+        end
+
+        context "When a block is passed without argument" do 
+            it "Returns the result from the operation inside the block" do 
+                expect(arr.my_inject {|a, b| a + b}).to eql(15)
+            end
+        end
+
+        context "When a symbol and default value are passed as arguments without a block" do 
+            it "Returns the result from the operation with the symbol with accumulator as the first item" do 
+                expect(arr.my_inject(5, :+)).to eql(20)
+            end
+        end
+
+        context "When a default value is passed as arguments with a block" do 
+            it "Returns the result from the operation inside the block with accumulator as the first item" do 
+                expect(arr.my_inject(5) {|a, b| a + b}).to eql(20)
+            end
+        end
+    end
+
 end
