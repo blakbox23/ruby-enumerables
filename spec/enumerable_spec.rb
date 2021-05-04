@@ -57,4 +57,26 @@ describe Enumerable do
             end
         end
     end
+
+    describe "#my_select" do 
+        context "When we call the my_select without a block" do 
+            it "returns an Enumerator class" do 
+                expect(arr.my_select).to be_an Enumerator
+            end
+        end
+
+        context "When we call my_select with a block" do 
+            it "Returns a new array of elements that match the condition inside the block" do 
+                result = arr.my_select { |item| item > 2}
+                expect(result).to eql([3,4,5])
+            end
+        end
+
+        context "When we call my_select on a range" do 
+            it "Returns a new array of elements that match the condition inside the block" do 
+                result = range.my_select { |item| item > 4}
+                expect(result).to eql([5,6,7,8])
+            end
+        end
+    end
 end
