@@ -9,6 +9,7 @@ describe Enumerable do
   let(:arr_char) {%w[ant bear cat]}
   let(:mix_arr) {[1, 2i, 3.14]}
   let(:bool) {[nil, true, 99]}
+  let(:nil_arr) {[nil, false]}
 
   describe '#my_each' do
 
@@ -152,4 +153,50 @@ describe Enumerable do
         end
       end
     end
+
+    describe '#my_none?' do
+      context 'if block is given' do
+        it 'returns true if the block never returns true for all elements' do
+          expect(arr_char.my_none? { |word| word.length == 5 }).to be true
+        end
+
+        it 'returns false if the block returns true' do
+          expect(arr_char.my_none? { |word| word.length >= 4 }).to be false
+        end
+      end
+
+      context 'if params is given and no block is given' do
+        it 'returns true if none of the elements match the Regex' do
+          expect(arr_char.my_none?(/d/)).to be true
+        end
+
+        it 'returns false if any of the elements match the Regex' do
+          expect(arr_char.none?(/b/)).to be false
+        end
+
+        it 'returns true if none of the elements belong to the Class' do
+          expect(bool.my_none?(String)).to be true
+        end
+
+        it 'returns false if any of the elements belong to the Class' do
+          expect(bool.my_none?(Integer)).to be false
+        end
+      end
+
+      context 'if no params or block is given' do
+        it 'returns true if  the array is empty' do
+          expect(test_arr.my_none?).to be true
+        end
+
+        it 'return true if the array has no true value' do
+          expect(nil_arr.my_none?).to be true
+        end
+
+        it 'returns false if any of the elements is true' do
+          expect(bool.my_none?).to be false
+        end
+      end
+    end
+
+    
 end
