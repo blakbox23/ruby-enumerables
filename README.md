@@ -5,8 +5,10 @@ We used the `yield` and `#call` keywords as required by the instructions to come
 ## Built With
 - Ruby
 
+
 ## Pre-Request
-Ruby installed.
+- Ruby installed.
+- Rspec installed
 
 ## Getting Started
 To get a local copy:
@@ -17,7 +19,9 @@ To get a local copy:
     2. Change the directory to the folder you want to clone the project into, `$ cd folder_name`.
     3. To run this project, type `$ ruby-enumerable.rb` 
 
-
+- To run tests
+    1. Run `rspec spec/enumerables_tests.rb` on the terminal
+    
 ## Authors
 
 ### Peter
