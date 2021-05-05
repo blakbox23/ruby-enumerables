@@ -3,7 +3,6 @@ require './enumerables.rb'
 describe Enumerable do
   let(:arr) {[1, 2, 3, 4, 5]}
   let(:range) {(1..5)}
-  let(:test_range) {()}
   let(:test_arr) {[]}
   let(:hash) {{
     apples: 10,
