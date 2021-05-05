@@ -198,5 +198,21 @@ describe Enumerable do
       end
     end
 
+    describe '#my_count' do
+      context 'If block is given' do 
+        it 'Counts the number of elements yielding a true value' do
+          expect(arr.my_count{ |x| x%2==0 }).to eql(2)
+        end
+      end
+      context 'If block is not given' do
+        it 'Returns the number of items that are equal to the param' do 
+          expect(arr.my_count(2)).to eql(1)
+        end
+        it 'Retruns the size of the array' do
+          expect(arr.my_count).to eql(arr.length)
+        end
+      end
+    end
+
     
 end
