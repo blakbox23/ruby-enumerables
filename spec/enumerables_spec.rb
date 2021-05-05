@@ -12,7 +12,6 @@ describe Enumerable do
   let(:nil_arr) {[nil, false]}
 
   describe '#my_each' do
-
   context 'If block is not given' do
     it 'returns enumerator if no block is given' do
       expect(arr.my_each).to be_a(Enumerator)
@@ -249,6 +248,12 @@ describe Enumerable do
         it 'returns accumulated value based on the symbol and number passed' do
           expect(range.my_inject(2, :*)).to eql(240)
         end
+      end
+    end
+
+    describe '#multiply_els' do
+      it 'returns the product of the param passed' do
+        expect(multiply_els(arr)).to eql(120)
       end
     end
 end
