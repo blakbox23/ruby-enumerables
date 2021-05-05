@@ -23,6 +23,9 @@ describe Enumerable do
         arr.my_each { |i| i * 2 }
         expect(arr.my_each { |i| i * 2 }).to eql(arr)
       end
+      it 'returns an error if wrong block is passed' do
+        expect{arr.my_each('i')}.to raise_error(StandardError)
+      end
       it 'Range is used' do
         expect(range.my_each { |i| i * 2 }).to eql(range)
       end
@@ -43,6 +46,9 @@ describe Enumerable do
       it 'returns the item' do
         arr.my_each_with_index { |item, _index| test_arr.push(item) }
         expect(test_arr).to eql(arr)
+      end
+      it 'returns an error if wrong block is passed' do
+        expect{arr.my_each_with_index('i')}.to raise_error(StandardError)
       end
     end
   end
@@ -202,6 +208,10 @@ describe Enumerable do
       it 'Counts the number of elements yielding a true value' do
         expect(arr.my_count(&:even?)).to eql(2)
       end
+
+      it 'returns an error if wrong condition is given' do
+        expect{arr.my_count{|i| i + '2'}}.to raise_error(StandardError)
+      end
     end
     context 'If block is not given' do
       it 'Returns the number of items that are equal to the param' do
@@ -225,6 +235,9 @@ describe Enumerable do
       end
       it 'returns repeated output for the range given' do
         expect(range.my_map { 'cat' }).to eql(%w[cat cat cat cat cat])
+      end
+      it 'returns an error if wrong condition is given' do
+        expect{arr.my_map{|i| i + '2'}}.to raise_error(StandardError)
       end
     end
   end
