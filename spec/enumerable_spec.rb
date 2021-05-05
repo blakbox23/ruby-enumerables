@@ -289,3 +289,17 @@ describe Enumerable do
     end
 
 end
+
+describe "#multiply_els" do 
+    context "When we pass an array as argument to the method" do 
+        it "returns a value as result of the multiplication inside the block" do 
+            expect(multiply_els([1,2,3,4,5])).to eql(120)
+        end
+    end
+
+    context "When we don't pass an argument to the method" do 
+        it "Raise an error" do 
+            expect{multiply_els}.to raise_error(StandardError)
+        end
+    end
+end
