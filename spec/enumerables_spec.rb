@@ -2,9 +2,17 @@ require './enumerables.rb'
 
 describe Enumerable do
   let(:arr) {[1, 2, 3, 4, 5]}
-  let(:range) {(0..5)}
+  let(:range) {(1..5)}
+  let(:test_range) {()}
   let(:test_arr) {[]}
+  let(:hash) {{
+    apples: 10,
+    oranges: 5,
+    bananas: 1
+  }}
 
+  let(:test_hash) {{}}
+ 
 
   describe '#my_each' do
 
@@ -41,9 +49,33 @@ describe Enumerable do
         expect(test_arr).to eql(arr)
       end
     end
+  end
+    describe '#my_select' do
+      context 'If block is not given'do
+        it 'returns an enumerable'do
+        expect(arr.my_select).to be_a(Enumerator)
+        end
+      end
+      context 'if block is given' do
+        it 'returns new array that meets condition' do
+          arr.my_select{|item|  item.even? ? test_arr << item : nil }
+          expect(test_arr).to eql([2,4])
+        end
+        it 'returns a new hash that meets the condition' do
+          hash.my_select{|k, v| v > 1 ? test_hash[k] = v : nil}
+          expect(test_hash).to eql({apples: 10, oranges: 5})
+        end
+        it 'returns new range that meets condition' do
+          range.my_select{|item|  item.odd? ? test_arr << item : nil }
+          expect(test_arr).to eql([1,3,5])
+        end
+      end
+
+
+    end
 
   
    
   
-  end
+ 
 end
