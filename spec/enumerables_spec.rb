@@ -214,5 +214,21 @@ describe Enumerable do
       end
     end
 
+    describe '#my_map' do
+      context 'If block is not given'do
+        it 'returns an enumerable'do
+        expect(arr.my_map).to be_a(Enumerator)
+        end
+      end
+      context 'If block is given' do
+        it 'returns a new mutated array' do
+          expect(range.my_map{|i| i*i}).to eql([1,4,9,16,25])
+        end
+        it 'returns repeated output for the range given' do
+          expect(range.my_map{"cat"}).to eql(["cat", "cat", "cat", "cat", "cat"])
+        end
+      end
+    end
+
     
 end
