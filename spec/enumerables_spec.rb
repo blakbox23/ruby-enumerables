@@ -230,5 +230,25 @@ describe Enumerable do
       end
     end
 
-    
+    describe '#my_inject' do
+      context 'if block is given' do
+        it 'returns the accumulated value' do
+          expect(range.my_inject{ |sum, n| sum + n }).to eql(15)
+        end
+
+        it 'returns the longest word' do
+          expect(arr_char.my_inject{|memo, word| memo.length > word.length ? memo : word}).to eql('bear')
+        end
+      end
+
+      context 'if block is not given' do
+        it 'returns accumulated value based on the symbol passed' do
+          expect(range.my_inject(:+)).to eql(15)
+        end
+
+        it 'returns accumulated value based on the symbol and number passed' do
+          expect(range.my_inject(2, :*)).to eql(240)
+        end
+      end
+    end
 end
