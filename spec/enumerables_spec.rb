@@ -112,5 +112,44 @@ describe Enumerable do
         end
       end
     end
- 
+
+    describe '#my_any?' do
+      context 'if block is given' do
+        it 'returns true if the block ever returns a value other than false or nil' do
+          expect(arr_char.my_any? { |word| word.length >= 3 }).to be true
+        end
+
+        it 'returns false if the block never returns true' do
+          expect(arr_char.my_any? { |word| word.length < 3 }).to be false
+        end
+      end
+
+      context 'if params is given and no block is given' do
+        it 'returns false if any of the elements doesn\'t match the Regex' do
+          expect(arr_char.my_any?(/d/)).to be false
+        end
+
+        it 'returns true if any of the elements match the Regex' do
+          expect(arr_char.my_any?(/r/)).to be true
+        end
+
+        it 'returns true if any of the elements belong to the Class' do
+          expect(bool.my_any?(Integer)).to be true
+        end
+
+        it 'returns false if none of the elements belong to the Class' do
+          expect(bool.my_any?(String)).to be false
+        end
+      end
+
+      context 'if no params or block is given' do
+        it 'returns true if there is any instance that is true' do
+          expect(bool.my_any?).to be true
+        end
+
+        it 'returns false for an empty array' do
+          expect(test_arr.my_any?).to be false
+        end
+      end
+    end
 end
