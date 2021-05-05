@@ -4,14 +4,11 @@ describe Enumerable do
   let(:arr) {[1, 2, 3, 4, 5]}
   let(:range) {(1..5)}
   let(:test_arr) {[]}
-  let(:hash) {{
-    apples: 10,
-    oranges: 5,
-    bananas: 1
-  }}
-
+  let(:hash) {{apples: 10, oranges: 5, bananas: 1}}
   let(:test_hash) {{}}
- 
+  let(:arr_char) {%w[ant bear cat]}
+  let(:mix_arr) {[1, 2i, 3.14]}
+  let(:bool) {[nil, true, 99]}
 
   describe '#my_each' do
 
@@ -49,6 +46,7 @@ describe Enumerable do
       end
     end
   end
+
     describe '#my_select' do
       context 'If block is not given'do
         it 'returns an enumerable'do
@@ -69,12 +67,50 @@ describe Enumerable do
           expect(test_arr).to eql([1,3,5])
         end
       end
-
-
     end
 
-  
-   
-  
+    describe '#my_all?' do
+      context 'if block is given' do
+        it 'returns true if the block doesn\'t return false' do
+          expect(arr.my_all? {|i| i > 0}).to be true
+        end
+
+        it 'returns true if the block doesn\'t return false' do
+          expect(arr.my_all? {|i| i.even?}).not_to be true
+        end
+      end
+
+      context 'if params is given and no block is given' do
+        it 'returns false if all elements don\'t match Regex' do
+          expect(arr_char.my_all?(/t/)).to be false
+        end
+
+        it 'returns true if all elements match Regex' do
+          expect(arr_char.my_all?(/a/)).to be true
+        end
+
+        it 'returns true if all elements belong to the Class' do
+          expect(mix_arr.my_all?(Numeric)).to be true
+        end
+
+        it 'returns false if all elements don\'t belong to the Class' do
+          expect(mix_arr.my_all?(String)).to be false
+        end
+      end
+
+      context 'if no params or block is given' do
+        it 'returns false if there is an instance that is false or nil' do
+          expect(bool.my_all?).to be false
+        end
+
+        it 'returns true if all instances are true' do
+          expect(arr.my_all?).to be true
+        end
+
+        it 'returns true for an empty array' do
+          expect(test_arr.my_all?).to be true
+        end
+      end
+    end
  
 end
