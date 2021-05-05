@@ -90,6 +90,7 @@ describe Enumerable do
         expect(arr.my_all? { |n| n > 10 }).to be false
       end
     end
+
     context 'When we pass an argument without a block ' do
       context 'When we have Regexp as argument' do
         it "return false if all elements doesn't match to Regexp" do
@@ -234,6 +235,12 @@ describe Enumerable do
         expect(result).to eql(5)
       end
     end
+
+    context 'When we compare elements of the collection which are numbers to a string' do
+      it 'Raise error' do
+        expect { arr.my_count { |item| item > '3' } }.to raise_error(StandardError)
+      end
+    end
   end
 
   describe '#my_map' do
@@ -256,6 +263,12 @@ describe Enumerable do
     context "When we don't pass block" do
       it 'Returns enumerator' do
         expect(arr.my_map).to be_an Enumerator
+      end
+    end
+
+    context 'When we pass block with math operation on intergers and strings' do
+      it 'Raise an error' do
+        expect { [1, '2', 5].my_map { |item| item * item } }.to raise_error(StandardError)
       end
     end
   end
@@ -284,20 +297,31 @@ describe Enumerable do
         expect(arr.my_inject(5) { |a, b| a + b }).to eql(20)
       end
     end
+
+    context 'When the argument is a string and we use it for math operations with integers' do
+      it 'Raise an error' do
+        expect { arr.my_inject('5') { |a, b| a * b } }.to raise_error(StandardError)
+      end
+    end
+
+    context 'When the argument is a string and we use it for math operations with integers' do
+      it 'Raise an error' do
+        expect { arr.my_inject }.to raise_error(StandardError)
+      end
+    end
   end
 end
 
-
-describe "#multiply_els" do 
-    context "When we pass an array as argument to the method" do 
-        it "returns a value as result of the multiplication inside the block" do 
-            expect(multiply_els([1,2,3,4,5])).to eql(120)
-        end
+describe '#multiply_els' do
+  context 'When we pass an array as argument to the method' do
+    it 'returns a value as result of the multiplication inside the block' do
+      expect(multiply_els([1, 2, 3, 4, 5])).to eql(120)
     end
+  end
 
-    context "When we don't pass an argument to the method" do 
-        it "Raise an error" do 
-            expect{multiply_els}.to raise_error(StandardError)
-        end
+  context "When we don't pass an argument to the method" do
+    it 'Raise an error' do
+      expect { multiply_els }.to raise_error(StandardError)
     end
+  end
 end
